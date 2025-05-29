@@ -214,7 +214,7 @@ def train_flappy_bird_actor_with_grpo(actor_checkpoint_path: str,
 
 if __name__ == '__main__':
     train_flappy_bird_actor_with_grpo(
-        actor_checkpoint_path='outputs/grpo_training/actor_grpo_9.pt',
+        actor_checkpoint_path='models/temp/actor_grpo_0.pt',
         output_dir='outputs/grpo_training_2',
         iterations=1,
         steps_per_iteration=20,

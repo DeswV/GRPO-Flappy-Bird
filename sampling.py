@@ -157,12 +157,13 @@ def sample_flappy_bird(actor: FlappyBirdActor, env_: gym.Env = None, env_reset_s
 
 
 if __name__ == "__main__":
+    checkpoint_path = 'models/actor_grpo.pt'
+
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-    actor = FlappyBirdActor.load_checkpoint(
-        'outputs/grpo_training_5/actor_grpo_0.pt').eval().to(device)
+    actor = FlappyBirdActor.load_checkpoint(checkpoint_path).eval().to(device)
 
     start_time = time.time()
-    avg_reward = sample_flappy_bird(actor, rounds=64, display=False, num_envs=64)['avg_reward']
+    avg_reward = sample_flappy_bird(actor, rounds=5, display=True)['avg_reward']
     end_time = time.time()
 
     print(f"Sampling took {end_time - start_time:.2f} seconds")
