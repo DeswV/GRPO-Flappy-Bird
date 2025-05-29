@@ -1,0 +1,8 @@
+pygame
+gymnasium[all]
+flappy-bird-gymnasium
+torch
+transformers
+tqdm
+numpy
+accelerate
