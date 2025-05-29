@@ -9,6 +9,7 @@ import os
 import json
 import gymnasium as gym
 import flappy_bird_gymnasium
+from configs import device
 from actor import FlappyBirdActor
 from sampling import sample_flappy_bird
 
@@ -46,8 +47,6 @@ def pretrain_flappy_bird_actor(human_play_data_dir: str,
                                eval_every_n_steps: int,
                                eval_samples: int,
                                model_config: dict = None):
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
     # 准备数据与模型
     dataset = PretrainingDataset(human_play_data_dir)
     loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
@@ -68,10 +67,10 @@ def pretrain_flappy_bird_actor(human_play_data_dir: str,
         # 获取一个训练 batch
         try:
             obs_batch, act_batch = next(data_iter)
-            obs_batch, act_batch = obs_batch.to(device), act_batch.to(device)
         except StopIteration:
             data_iter = iter(loader)
             obs_batch, act_batch = next(data_iter)
+        obs_batch, act_batch = obs_batch.to(device), act_batch.to(device)
 
         # 前向+损失+反向
         logits = actor(obs_batch)
@@ -107,7 +106,7 @@ def pretrain_flappy_bird_actor(human_play_data_dir: str,
 if __name__ == "__main__":
     pretrain_flappy_bird_actor(
         human_play_data_dir="human_play_data",
-        output_dir="outputs/pretrained_models/128-128-64_lr1e-3",
+        output_dir="outputs/pretrained_models/",
         steps=1000,
         peak_lr=1e-3,
         warmup_steps=100,

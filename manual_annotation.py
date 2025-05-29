@@ -76,7 +76,7 @@ def log_game(output_dir:str, rounds: int = 5):
         with open(os.path.join(output_dir, file_name), "w", encoding='utf-8') as f:
             json.dump(game_data, f, indent=2)
 
-        print(f"数据已保存为 {file_name}")
+        print(f"Data saved to {file_name}")
 
     # 清理
     env.close()
@@ -86,4 +86,4 @@ if __name__ == "__main__":
     output_directory = "human_play_data"
     rounds_to_play = 5
     log_game(output_directory, rounds_to_play)
-    print("游戏记录完成。")
+    print("Log completed.")

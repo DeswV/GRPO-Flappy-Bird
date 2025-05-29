@@ -8,6 +8,7 @@ from tqdm import tqdm
 import os
 import copy
 import random
+from configs import device
 from actor import FlappyBirdActor
 from sampling import sample_flappy_bird
 
@@ -124,8 +125,6 @@ def train_flappy_bird_actor_with_grpo(actor_checkpoint_path: str,
     使用GRPO算法训练Flappy Bird Actor。
     注意到输入参数中的step是指在环境中进行采样然后若干次更新模型权重的一个过程，不是指单次更新模型权重
     """
-    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-
     actor = FlappyBirdActor.load_checkpoint(actor_checkpoint_path).to(device)
     optimizer = AdamW(actor.parameters(), lr=learning_rate)
 
@@ -214,10 +213,10 @@ def train_flappy_bird_actor_with_grpo(actor_checkpoint_path: str,
 
 if __name__ == '__main__':
     train_flappy_bird_actor_with_grpo(
-        actor_checkpoint_path='models/temp/actor_grpo_0.pt',
-        output_dir='outputs/grpo_training_2',
-        iterations=1,
-        steps_per_iteration=20,
+        actor_checkpoint_path='outputs/pretrained_models/[your checkpoint here]',
+        output_dir='outputs/grpo_training',
+        iterations=6,
+        steps_per_iteration=3,
         num_groups=16,
         group_size=128,
         repeat_samples_n_times=1,
@@ -226,5 +225,5 @@ if __name__ == '__main__':
         learning_rate=1e-5,
         save_every_n_steps=1,
         eval_every_n_steps=1,
-        kl_coefficient=0.0
+        kl_coefficient=0.04
     )

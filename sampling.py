@@ -6,6 +6,7 @@ from collections import OrderedDict
 import gymnasium as gym
 import flappy_bird_gymnasium
 import pygame
+from configs import device
 from actor import FlappyBirdActor
 
 
@@ -159,7 +160,6 @@ def sample_flappy_bird(actor: FlappyBirdActor, env_: gym.Env = None, env_reset_s
 if __name__ == "__main__":
     checkpoint_path = 'models/actor_grpo.pt'
 
-    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     actor = FlappyBirdActor.load_checkpoint(checkpoint_path).eval().to(device)
 
     start_time = time.time()
